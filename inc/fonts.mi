@@ -1,0 +1,10 @@
+_{embed.font blabla fonts/quattrocentosans-regular.woff }_
+_{embed.font coding fonts/firamono-regular-webfont.woff }_
+_{embed.font titles fonts/artifika-regular-webfont.woff }_
+_{embed.font blabli fonts/andbasr-webfont.woff }_
+[style: scoped]
+html pre,code               { font-family:coding,monospace;   }
+html body                   { font-family:blabla,sans-serif;  }
+html h1,h2,h3,h4,h5,header  { font-family:titles,serif;       }
+html quote                  { font-family:blabli,cursive;     }
+[:style]

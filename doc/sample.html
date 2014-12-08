@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title> Wikit</title>
+<style type="text/css"> 
+    body {   
+        background: black;
+        font-size: 1.0em;
+        font-family: Arial;
+        }
+    .contents { 
+        background: rgb(223, 231, 229); 
+        width:700px;
+        margin-left:auto;
+        margin-right:auto;
+        padding:50px;
+        }
+    pre { 
+        background: rgba(256,256,200,0.5);
+        width: 95%;
+        margin-left: 30px;
+        font-size: 0.9em;
+        }
+    svg {   
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+        font-size:0.7em;
+        } 
+    path,line {   
+        stroke: rgba(0,0,0,1); 
+        stroke-width: 2; 
+        stroke-linejoin:round;
+        stroke-linecap:round;
+        vector-effect: non-scaling-stroke;
+        } 
+    path {
+        fill: rgba(255,0,255,0.5);
+    }
+    text {
+        font-weight: bold;
+        }
+    rect {
+        fill: rgba(255, 255, 143, 0.8);
+        stroke-width:1;
+        vector-effect: non-scaling-stroke;
+        }
+    circle {
+        fill: black;
+        stroke-width: 0;
+        }
+    .dialog path, ellipse {
+        fill: rgba(180,180,200,1);
+        stroke-width: 0;
+        }
+    #arrow  { fill: black; }
+    #bubble { fill: black; }
+</style>
+</head><body>
+<div class="contents">
+<h1> [Wikit:] Quick Ref</h1>
+
+<h1> <code>_# Heading1</code></h1>
+<h2> <code>_## Heading2</code></h2>
+<h3> <code>_### Heading3</code></h3>
+<h4> <code>_#### Heading4</code></h4>
+<h5> <code>_##### Heading5</code></h5>
+<h6> <code>_###### Heading6</code></h6>
+<h3> Code:</h3>
+<pre>
+<code>* list item 1
+</code><code>* list item 2
+</code><code>* list item 3
+</code><code>
+</code></pre>
+<h3> Render:</h3>
+<ul><li> list item 1 
+</li><li> list item 2 
+</li><li> list item 3 </li></ul>
+
+<h3> Code:</h3>
+<pre> This is &#95;*bold*&#95;, this is &#95;/Italic/&#95;.</pre>
+<h3> Render:</h3>
+This is <b>bold</b>, this is <em>Italic</em>. 
+<h3> Code:</h3>
+<pre>
+&#124;&#124;&#124;Table &#124;&#124;&#124;Col1 &#124;&#124;&#124;Col2 &#124;&#124;&#124;
+&#124;&#124;&#124;Row1  &#124;&#124; ABC  &#124;&#124; DEF  &#124;&#124;
+&#124;&#124;&#124;Row2  &#124;&#124; 123  &#124;&#124; 456  &#124;&#124;
+</pre>
+<h3> Render:</h3>
+<table>
+<tr><th>   Table   </th><th> Col1 </th><th> Col2 </th></tr>
+<tr><td>    Row1    </td><td>  ABC   </td><td>  DEF  </td></tr>
+<tr><td>    Row2    </td><td>  123   </td><td>  456  </td></tr>
+</table></div></body></html>
