@@ -4,7 +4,11 @@
 [wiki:off]
 <head>
 <meta charset="UTF-8" />
-<title>Slide it!</title>
+_{py
+if "title" not in globals(): 
+    title = "Slide it!"
+print( "<title>%s</title>"%(title))
+}_
 <style>
     #matrix               { position:fixed; }
     section               { position:absolute; transform-origin: 0% 0%; }
@@ -13,13 +17,31 @@
     #matrix, section      { transition: all 0.4s ease-in-out; }
     section:not(.here)    { opacity: 0.2; }
     .flying section:hover { opacity: 1; }
+    .watermark {
+        position: absolute;
+        z-index: -1;
+        text-align:center;
+        color:rgba(255,200,200,0.7);
+        font-size:4em;  
+        transform-origin: 0 0;
+        transform: rotate(-55deg) translate(-50%,0%);
+        }
 </style>
 <script>
-var map    = { 
-    w      : 950, //792, // Slide's width  (fits both A4 and USletter at 72dpi) 
-    h      : 670, //595, // Slide's height
-    gap    : 25,  // Gap between slides
+var dpi  = 96;
+var page = {
+    "A4"          :[ 8.27-0.8,11.69-0.8],
+    "US"          :[ 8.50-0.8,11.00-0.8],
+    "A4_landscape":[11.69-0.8, 8.27-0.8],
+    "US_landscape":[11.00-0.8, 8.50-0.8],
+                    }["A4_landscape"]
+var map  = { 
+    w      : Math.round( page[0]*dpi),// Slide's width
+    h      : Math.round( page[1]*dpi),// Slide's height
+    gap    : Math.round(0.26*dpi),// Gap between slides
+    ext    : 2,   // Nb of gaps extending the size of the viewing window 
     places : [],  // Occupied positions
+    wm     : "",  // waterMark
     scale  : 1,
     matrix : function() {
         return document.getElementById("matrix")
@@ -39,16 +61,17 @@ var map    = {
             )
         // Fit Slides into window
         this.scale = Math.min(
-                            bigW/(this.w+4*this.gap),
-                            bigH/(this.h+4*this.gap)
+                            bigW/(this.w+this.ext*this.gap),
+                            bigH/(this.h+this.ext*this.gap)
                             )
         // View port size extending on neighboring slides
         var matrix = this.matrix()
         if ( !matrix.classList.contains("printing") ) {
-        matrix.style.height  = this.scale*(this.h+4*this.gap)+"px"
-        matrix.style.width   = this.scale*(this.w+4*this.gap)+"px"
-        this.pady  = 0.5*(bigH-this.scale*(this.h+4*this.gap)) 
-        this.padx  = 0.5*(bigW-this.scale*(this.w+4*this.gap))
+        matrix.style.height  = this.scale*(this.h+this.ext*this.gap)+"px"
+        matrix.style.width   = this.scale*(this.w+this.ext*this.gap)+"px"
+        //matrix.style.margin  = "0px"
+        this.pady  = 0.5*(bigH-this.scale*(this.h+this.ext*this.gap))>>0 
+        this.padx  = 0.5*(bigW-this.scale*(this.w+this.ext*this.gap))>>0
     }
         var slides = this.slides()
         var xi=0,yi=-1
@@ -68,18 +91,31 @@ var map    = {
             slides[i].style.margin=this.gap+"px"
             slides[i].setAttribute("onclick","cursor.jump("+xy+")")
             slides[i].setAttribute("ondblclick","cursor.dive("+xy+")")
+            // Fit content in frame
+            content = slides[i].querySelector(':scope > .autoscale')
+            if (content) {
+                if ( typeof content.dataset.scale == "string" ) {
+                         var scaleToFit = eval(content.dataset.scale)
+                } else { var scaleToFit = (0.80*this.h-2*this.gap)/content.offsetHeight
+                }
+                var padding_pct = 10
+                content.style.transform="scale("+scaleToFit+") translate("+padding_pct+"%)"
+                content.style.width=(100-2*padding_pct)/scaleToFit+"%"
+                }
             }
         }
     }
+
 var cursor = { 
-    x      :  0 , 
-    y      :  0 ,
+    x      : 0, 
+    y      : 0, 
     here   : function()      { return [this.x,this.y].toString()         } ,
     step   : function(dx,dy) { this.jump( this.x+dx,this.y+dy )          },
     dive   : function( x, y) { flyToggle("pleaseLand"); this.jump(x,y)   }, 
     jump   : function( x, y) { 
                 // Jumps only if new position occupied 
                 if ( map.places.indexOf([x,y].toString())>= 0) {
+                    window.location.hash = "#"+x+"_"+y
                     this.x = x; this.y = y ; slideTo()
                     }
                 }
@@ -87,19 +123,28 @@ var cursor = {
 function slideTo(){
     var slides = map.slides()
     var matrix = map.matrix()
+    Array.prototype.forEach.call(document.querySelectorAll('.watermark'),function(e){
+        e.parentNode.removeChild(e);
+    });
     for ( var i=0; i<slides.length; i++){
         if ( matrix.classList.contains("printing") ) {
         // Place slides in printable column
             slides[i].classList.add("here")
             // Fit to paper page
+            slides[i].style.margin=0
             slides[i].style.transform=""
-            //slides[i].style.transform="scale(1.15)"
+            if ( map['wm'] ) {
+                slides[i].insertBefore(
+                    map['wm'].cloneNode(true), slides[i].childNodes[0]
+                    )
+            }
         } else {
         // Place slides in cursor-centric matrix 
             var xy  = slides[i].dataset.xy
             var pos = xy.split(",").map(eval)
-            var tx  =((pos[0]-cursor.x)*(map.w+map.gap)+2*map.gap)*map.scale+map.padx
-            var ty  =((pos[1]-cursor.y)*(map.h+map.gap)+2*map.gap)*map.scale+map.pady
+            var tx  =((pos[0]-cursor.x)*(map.w+map.gap))*map.scale+map.padx
+            var ty  =((pos[1]-cursor.y)*(map.h+map.gap))*map.scale+map.pady
+            slides[i].style.margin=this.gap+"px"
             slides[i].style.transform="translate("+tx+"px,"+ty+"px) scale("+map.scale+")"
             // flag current slide
             if ( xy == cursor.here() ) {
@@ -114,7 +159,7 @@ function flyToggle(requestLanding){
     var matrix = map.matrix()
     if ( requestLanding || matrix.classList.contains("flying") ) {
         matrix.classList.remove("flying")
-        matrix.style.transform ="scale(1)"
+        matrix.style.transform = "scale(1)"
         cursor.jump(cursor.x,cursor.y)
     } else {
         matrix.classList.add("flying")
@@ -131,9 +176,26 @@ function printToggle(){
         matrix.classList.add("printing")
         document.body.style.background = "#fff"
     }
-    cursor.jump(0,0)
+    cursor.jump(cursor.x,cursor.y)
 }
-window.onload    = function(){ map.init() ; cursor.jump(0,0)}
+function waterMark() {
+    var txt = prompt("Water-mark string", "Harry Potter");
+    map["wm"]=document.createElement("svg")
+    map["wm"].classList.add("watermark")
+    if ( txt !=null && txt.length>0 ) { var repeat = 400/txt.length|0 }
+    map["wm"].innerHTML = "<text>"+new Array(repeat).join(" "+txt)+"</text>"    
+    cursor.jump(cursor.x,cursor.y)
+}
+window.onload    = function(){ 
+    map.init() ; 
+    if ( location.hash ) {
+        xy = /#(\d*)_(\d*)/.exec(location.hash)
+        var x=eval(xy[1]),y=eval(xy[2])
+    } else {
+        var x=0          ,y= 0   
+    }    
+    cursor.jump(x,y)
+}
 window.onresize  = function(){ map.init() ; slideTo()       }
 window.onkeydown = function (evt) {
               if(evt.which === 39){ cursor.step(    1, 0); // Right
@@ -144,12 +206,10 @@ window.onkeydown = function (evt) {
         }else if(evt.which === 32){ flyToggle();           // Space
         }else if(evt.which === 13){ flyToggle();           // Enter
         }else if(evt.which === 80){ printToggle();         // p
-      //}else if(evt.which)       { console.log(evt.which) // Show me the code
+        }else if(evt.which === 87){ waterMark();           // w
+        //}else if(evt.which)       { console.log(evt.which) // Show me the code
         }
     }
 </script>
-</head>
 [markit:on]
 [wiki:on]
-[body:]
-[div:noa id="matrix"]

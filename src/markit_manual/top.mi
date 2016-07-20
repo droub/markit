@@ -1,0 +1,898 @@
+_{include %(sys)s/inc/slideit.mi   }_
+_{include %(sys)s/inc/style.mi     }_
+_{include %(sys)s/inc/fonts.mi     }_
+_{embed.background header %(src)s/logo.svg}_
+_{embed.background section %(src)s/deco.svg}_
+
+[style: scoped]
+.theme1 section { background-color:rgba(219,234,251,0.7);}
+.theme2 section { background-color:rgba(197,247,229,0.7);}
+.theme3 section { background-color:rgba(236,212,195,0.7);}
+.theme4 section { background-color:rgba(218,216,154,0.8);}
+.theme5 section { background-color:rgba(249,229,229,0.7);}
+.mega           { font-size:4em; padding:10%; }
+[:style]
+[:head]
+[body:]
+[div:noa id="matrix"]
+_________________________________ class="theme1"
+
+================================ data-xy="0,0"
+[div: class="mega"]
+<svg>
+    <line x1="0" y1="100" x2="50" y2="100"/> 
+    <text x="0" y="0" transform="translate(50 100) rotate(-15)"> 
+    Slide it !
+    </text>
+</svg>
+[:]
+
+_{sketchit  3.0
+
+   ^  
+  <+> 
+   v  
+}_
+
+vvvvvvvvvvvvvvvv
+by DerivationBud
+================================
+Slideit
+^^^^^^^
+_# What is it
+
+This is a _*single-file*_ self-contained HTML _/slide-show/_ document. It can be put on a static web server or shared by mail. Graphics are embedded as in-line _*SVG*_, Javascript doesn't require any external libraries. Fonts or bitmaps are embedded as base64 encoded chunks.
+So any recent browser should be able to open it.
+
+_# Keys
+
+* _=Spacebar=_ or _=Enter=_ toggles fly mode
+* _=p=_ toggles printable/navigable document
+* _=w=_ creates watermark on print view
+
+_{sketchit 
+
+ +--+     ++ ++ ++
+ |  |     ++ ++ ++
+ |  | <->
+ |  |     ++ ++ ++
+ +--+     ++ ++ ++
+}_
+
+================================ 
+Slideit
+^^^^^^^
+_# Create
+
+The contents of this presentation can be written using a text editor in various formats:
+
+* pure _*html+css+js*_
+* _*markit*_ which is a light-weight html syntax, giving access to the full potential of html5 but easier to write than html
+* _*wikit*_ which is a wiki syntax giving access to html5 recent tags such as article, section,header,footer.
+* _*sketchit*_ which is a block-diagram generator based on ascii-art
+* _*python*_ which is an easy to use scripting language
+* Any combination of the above is welcome
+
+The source file(s) is(are) processed by a one step operation to generate the single file presentation.  
+_{sketchit 
+
+        edit             run          share
+ .---------+   +-----------+   .----------+
+ |  doc.mi |-->| markit.py |-->|  doc.html|
+ +----^----+   +-----------+   +----------+
+      |
+      | include
+ .----+-----+
+ |  stuff.mi|
+ +----------+
+}_
+
+================================
+Slideit
+^^^^^^^
+_# Install
+
+_## Dependencies
+* python interpreter 2.6,2.7 or 3.4
+* All other dependencies js,html,python are in the project's directory
+
+_## Install
+
+* Install Python3 if you don't have it already
+* Check-out markit folder
+
+_## Quick start
+
+* Goto the _=markit=_ folder
+* Edit _=src/mydoc.mi=_ and paste this:
+[wiki:off]
+[pre:]
+_# My doc
+Hello World !
+[:pre]
+[wiki:on]
+* _=python markit.py src/mydoc.mi doc/mydoc.html=_
+* Navigate to _=file://..../mydoc.html=_
+
+================================ 
+Slideit
+^^^^^^^
+_# Execution Flow
+
+[style:eol  scope] table {width:70%; margin-left:15%; margin-right:15%; }
+
+
+|| _=1=_ || Include directives || Many to Single file ||
+|| _=2=_ || Plugins execution || Python to any: _*wiki,markit,html,svg*_ ||
+|| _=3=_ || Wiki search and replace || Wiki syntax to: _*markit,html,svg*_ ||
+|| _=4=_ || Markit resolution || Markit to _*html,svg*_ ||
+
+________________________________ class="theme2"
+
+================================ data-xy="1,0"
+[div: class="mega"] _= Wikit =_ [:]
+
+vvvvvvvvvvvvvvvv
+by DerivationBud
+================================ 
+Wikit
+^^^^^
+_# _# heading 1
+_## _## heading 2
+_### _### heading 3
+_#### _#### heading 4
+_##### _##### heading 5
+_###### _###### heading 6
+A word can be _**Bold**_ or _//Italic//_ or _= _=Fixed width=_ =_
+
+
+A bullet list: 
+* item1 &larr; _= * item1
+* item2 &larr; _= * item2
+* item3 &larr; _= * item3
+
+================================ 
+Wikit
+^^^^^
+_#Tables
+[wiki:off]
+[pre:]
+|||Table |||Col1 |||Col2 |||
+|||Row1  || ABC  || DEF  ||
+|||Row2  || 123  || 456  ||
+[:pre]
+[wiki:on]
+
+|||   Table   ||| Col1 ||| Col2 |||
+||    Row1    ||  ABC   ||  DEF  ||
+||    Row2    ||  123   ||  456  ||
+
+_#Blocks
+Code Blocks delimiters: _= [wiki:off]_== xxx ==_ [wiki:on] =_
+_==
+for i in range(3):
+   print "Hip"
+print "Houra"
+==_
+
+Quoted block delimiters _= [wiki:off]_" xxx "_[wiki:on] =_
+
+_"
+I am happy !
+"_
+
+================================ 
+Header
+^^^^^^
+_# Open new article 
+_== ____________ optional attrs ==_
+
+_# Open new section
+
+_== =========== optional attrs ==_
+
+_# Decorate section
+
+_==
+[wiki:off]
+ Header
+ ^^^^^^
+[wiki:on]
+._
+
+_==
+[wiki:off]
+ vvvvvv
+ Footer
+[wiki:on]
+._
+
+vvvvvv
+Footer
+================================ 
+Wikit
+^^^^^
+_# Style
+_==
+[[style: scoped]
+    .sunset {color: yellow; }
+[[:style]
+[[span: class="sunset"]
+[wiki:off]
+* One
+* Two 
+* Three
+[wiki:on]
+==_
+
+[style: scoped]
+    .sunset {color: yellow; }
+[:style]
+[span:nol class="sunset"]
+* One
+* Two 
+*Three
+
+vvvvvv
+Footer
+================================ 
+Wikit
+^^^^^
+_# In-line
+_## Code
+_"<xmp><pre> Circle </pre>
+<svg width="100" height="100">
+<circle cx="50" cy="50" r="20" style="stroke:black"/>
+</svg></xmp>
+"_
+_## Or
+_==
+[[pre:eol] Cicle
+[[svg:nol width="100" height="100"]
+[[circle. cx="50" cy="50" r="20" style="stroke:black"]
+==_
+_## Render
+<pre> Circle </pre>
+<svg width="100" height="100">
+<circle cx="50" cy="50" r="20" style="stroke:black"/>
+</svg>
+
+vvvvvv
+Footer
+________________________________ class="theme3"
+================================ data-xy="3,0"
+_{sketchit 0.9
+
+
+
+               
+                                         .-+
+                                         +-+
+                                           
+ +--@  @  @       @         @            @+@   @
+ |     | ++      @+--@      |             |   @+--@ 
+ |     | |  +--+  |    +--@ +--+          |    |
+ +---+ +-+  |  |  |    |    |  |   @---@  |    |
+     | + |  +--+  |    |    |  |          |    |
+     | | ++ |     |    |    |  |          |    |
+ @---+ @  @ +--@  +--@ +--@ @  @         @+@   +--@
+}_
+vvvvvvvvvvvvvvvv
+by DerivationBud
+================================ 
+Sketchit
+^^^^^^^^
+_# Intro
+Sketchit is a plugin turning ascii-art into svg
+
+_# Syntax
+In this example below, 2 is the scale ( optional)
+
+_==
+_!{sketchit 2
+
+  A @-> B@-+
+  ^        |
+  +- C <---+
+
+}_
+==_
+_## Render
+_{sketchit 2
+
+  A @-> B@-+
+  ^        |
+  +- C <---+
+}_
+================================ 
+Sketchit
+^^^^^^^^
+_# Lines
+Lines made of [code:] | - + [:code] are detected. Groups of 4 lines forming rectangles are drawn as rectangles, all other lines are drawn as separate elements. Special characters [code:] ^ v < > @ [:] are replaced by instances of bubbles and arrows terminators.
+_==
+                                       A               B
+   ------    | ^ | ^ ^ @                 +------------+      @       
+             | | | | | |   ---+          |            |      | 
+   <-----    | | | | | |      |          |            |   +--v----+
+             | | | | | |      +---->     |            |   |       | 
+   @---->    | | | | | |      |          |            |   | Hello | 
+             | | v v @ v      +---->     +------------+   +-------+      
+                                        D              C
+==_
+_{sketchit 0.75
+
+                                        A              B
+   ------    | ^ | ^ ^ @                 +------------+      @       
+             | | | | | |   ---+          |            |      |
+   <-----    | | | | | |      |          |            |   +--v----+
+             | | | | | |      +---->     |            |   |       |
+   @---->    | | | | | |      |          |            |   | Hello |
+             | | v v @ v      +---->     +------------+   +-------+    
+                                        D              C
+}_
+
+================================ 
+Sketchit
+^^^^^^^^
+_# Polygons
+In the perimeter of a rectangle contains dots, it is considered as a bonding box of a polygon. If only one dot is found an ellipse is drawn, else the dots are connected.
+
+_==
+  +--.-----.-+               
+  |          |              
+  .          .              
+  |    Pol   |              
+  |        +-+---.------+   
+  |        . |          |   
+  |        | |          |   
+  +---.----+.+          .-> Exit 
+           |            |       
+           .---------.--+      
+==_
+_{sketchit 0.75
+
+  +--.-----.-+                  
+  |          |                 
+  .          .                
+  |    Pol   |                  
+  |        +-+---.------+       
+  |        . |          |       
+  |        | |          |       
+  +---.----+.+          .-> Exit
+           |            |       
+           .---------.--+       
+}_
+================================
+Sketchit
+^^^^^^^^
+_# Style
+Style can be applied, as on any other element.
+[pre:]
+[[style: scoped]
+    .mystyle rect {
+        fill: rgba(0, 0, 200, 0.8);
+        stroke: rgba(100,100,150, 1);
+        stroke-linejoin: round;
+        stroke-width: 5;
+        }
+[[:style]
+[[div: class="mystyle"]
+_!{sketchit 0.75
+
+  +----------+                  
+  |          |
+  +----------+                  
+
+}_
+[[:div]
+[:pre]
+[style: scoped]
+    .mystyle rect {
+        fill: rgba(0, 0, 200, 0.8);
+        stroke: rgba(100,100,150, 1);
+        stroke-linejoin: round;
+        stroke-width: 5;
+        }
+[:style]
+[div: class="mystyle"]
+
+_{sketchit 0.75
+
+  +----------+                  
+  |          |
+  +----------+                  
+
+}_
+
+================================ 
+Sketchit
+^^^^^^^^
+_#Example
+_==
+     +--------+ +--------+ +--------+
+     | Block1 | | Block2 | | Block3 |
+     +-----^--+ +------^-+ +------^-+
+           |           |          |
+        <--@-----------@----------@-->
+            .-+        |          |
+        A --> . +------v-+ +------v-+
+            | +-> Block6 | | Block7 |
+        B --> . +--------+ +--------+
+            .-+
+==_
+_{sketchit
+
+     +--------+ +--------+ +--------+
+     | Block1 | | Block2 | | Block3 |
+     +-----^--+ +------^-+ +------^-+
+           |           |          |
+        <--@-----------@----------@-->
+            .-+        |          |
+        A --> . +------v-+ +------v-+
+            | +-> Block6 | | Block7 |
+        B --> . +--------+ +--------+
+            .-+
+}_
+
+================================ 
+Sketchit
+^^^^^^^^
+_#Example
+_==
+                       +----------+
+                   +---+ Feedback <--+
+                   |   +----------+  |
+                   |                 @-->
+   +---------+   .-v-+   +--------+  |
+   | Stimuli +---> Op+---> Action +--+
+   +---------+   +---+   +--------+
+==_
+_{sketchit
+
+                       +----------+
+                   +---+ Feedback <--+
+                   |   +----------+  |
+                   |                 @-->
+   +---------+   .-v-+   +--------+  |
+   | Stimuli +---> Op+---> Action +--+
+   +---------+   +---+   +--------+
+}_
+________________________________ class="" 
+================================ data-xy="2,0"
+
+[div: class="mega"] _= _!{directives}_ =_
+[:]
+
+vvvvvvvvvvvvvvvv
+by DerivationBud
+================================ 
+directives
+^^^^^^^^^^
+_# file inclusion
+_==
+_!{include %(sys)s/inc/mystyle.mi }_
+==_
+* Path must be absolute, but can be built from the absolute variables: 
+** _=src=_ : path of the top-level input file
+** _=sys=_ : path of the markit engine
+
+_# font embedding
+_==
+_!{embed.font myname %(sys)s/fonts/mywebfont.woff }_
+[[style:]
+html body { font-family:myname,sans-serif;  }
+[[:style]
+==_
+
+================================ class="bckexample" 
+directives
+^^^^^^^^^^
+_# image as background
+
+_==
+_!{embed.background .bckexample %(src)s/sky.png }_
+==_
+[wiki:off]
+_{embed.background .bckexample %(src)s/sky.png }_
+[wiki:on]
+_# image embedding
+_==
+_!{embed.image %(src)s/alien.png }_
+==_
+_{embed.image %(src)s/alien.png }_
+
+_==
+_!{embed.image %(src)s/leaf.svg }_
+==_
+_{embed.image %(src)s/leaf.svg }_
+
+================================ 
+directives
+^^^^^^^^^^
+_# In-line python injection
+_==
+_!{py
+for _ in range(3):
+    print "* Hello"
+}_
+==_
+_{py
+for _ in range(3):
+    print( "* Hello")
+}_
+_"Directives are performed before wiki or markit interpretation"_
+
+================================ 
+directives
+^^^^^^^^^^
+_# Data injection
+
+_==
+[wiki:off]
+_!{py
+import json
+file = "sample.json" 
+print("Reading _=%s=_..."%(file))
+data = json.load( open( dirs["src"]+"/"+file )) 
+for k,v in data.items():
+  print("||%r||%r||"%(k,v))
+[wiki:on] }_ ==_
+_{py
+import json
+file = "sample.json" 
+print("Reading _=%s=_..."%(file))
+data = json.load( open( dirs["src"]+"/"+file )) 
+for k,v in data.items():
+  print("||%r||%r||"%(k,v))
+}_
+
+
+
+================================ 
+directives
+^^^^^^^^^^
+_# Custom plugin
+
+* Write a file _=.../plugins/myfunc.py=_ containing:
+_==
+def myfunc(txt):
+   msg = "-->"+txt+"<--"
+   return msg
+==_
+* Call from _=./doc_sources/mydoc.mi=_ with syntax:
+_==
+_!{myfunc bla bla
+bla bla bla bla }_ ==_
+* Render in doc _=./doc/mydoc.html=_
+_==
+--> bla bla
+bla bla bla bla<-- ==_
+
+================================ 
+directives
+^^^^^^^^^^
+_# Custom plugin cont'd
+
+* More than one function, can be put in a module
+* Call function _=myfunc1=_ from file _=mylib.py=_
+_==
+_!{mylib.myfunc1 bla bla
+bla bla bla bla }_ ==_
+
+================================ 
+directives
+^^^^^^^^^^
+_# Variables
+
+_==
+_!{py 
+v={}
+v["myint"]= 12
+v["mystr"]= "ABC"
+}_
+My integer equals _!{py print v["myint"] }_
+
+My string equals _!{py print v["mystr"] }_
+
+==_
+
+_{py 
+v={}
+v["myint"]= 12
+v["mystr"]= "ABC"
+}_
+
+My integer equals _{py print( v["myint"]) }_
+
+My string equals _{py print( v["mystr"]) }_
+
+================================ 
+directives
+^^^^^^^^^^
+_# Drawing charts
+_==
+bars={"ABC":12,"DEF":25,"GHI":10,"IJK":12}
+==_
+_{py 
+bars={"ABC":12,"DEF":25,"GHI":10,"IJK":12}
+i = 0
+print( '[svg: width="80%" viewBox="0 0 500 200"]')
+for k,v in bars.items():
+  print( '[text: x="50"  dy="1em" y="%d"] %s [:text]'%((i+1)*30,k))
+  print( '[rect. x="100" height="20" y="%d" width="%d" style="stroke:none;fill:blue;"]'%((i+1)*30,v*10) )
+  print( '[text: x="%d"  dy="1em" y="%d"] %d [:text]'%(130+v*10,(i+1)*30,v) )
+  i+=1
+print( '[:svg]' )
+}_
+
+================================ 
+directives
+^^^^^^^^^^
+_# Call graphviz
+_==
+_!{graph.dotdot 
+_{include %(src)s/sample.dot }_}_
+==_
+or
+_==
+_!{graph.dotdot %(src)s\sample.dot }_
+==_
+_{graph.dotdot %(src)s/sample.dot }_
+
+_"Note: _*dot*_ command line must be installed separately from _/http://www.graphviz.org/_ "_
+
+=================== 
+directives
+^^^^^^^^^^
+_# Call plantUML
+_==
+_\{graph.plantuml %(src)s/sample.plantuml}_
+==_
+or
+_==_\{graph.plantuml
+_{include %(src)s/sample.plantuml}_
+}_
+==_
+
+_{graph.plantuml %(src)s/sample.plantuml}_
+
+_"Note: _*java*_ must be installed"_
+
+
+________________________________ class="theme4" 
+================================ data-xy="4,0"
+[div: class="mega"] [[markit:] [:]
+
+vvvvvvvvvvvvvvvv
+by DerivationBud
+================================ 
+Markit
+^^^^^^
+_# Intro
+_*mark-it*_ is something in between mark-down and mark-up. It is a syntax intended to be an intermediate format before conversion into full-blown html/svg. It is easier to read and write by both humans and computers. Possible applications are: 
+* Manual writing of html, thanks to a syntax easier to read and to maintain.
+* Automatic writing of documents. Generators can post contents, keeping track of open tags and closing them is taken care of by the markit engine.
+* Simple mapping of a wiki syntax onto mark-it tags that acts as an intermediate step toward html generation.
+_{sketchit
+
+                          +------+
+             +--------+ +-> html |
+ +-------+ +-> markit +-+ +------+
+ | wiki  +-+ +--------+
+ +-------+
+}_
+
+=================================
+Markit
+^^^^^^
+_# Basic Syntax 
+
+* Tags can opened and closed: _*[[tag: attributes]*_ contents _*[[:tag]*_ 
+* This will be translated into _* &lt;tag attributes&gt;*_ contents _*&lt;/tag&gt;*_
+
+* Tags that have no contents can be written: _* [[tag. attributes] *_  
+* This will be translated into _* &lt;tag attributes&gt;&lt;/tag&gt;*_ 
+
+
+* But most of the magic comes from the fact that tags don't need to be closed manually, i.e. the _*[[:tag]*_ can be omitted and will be added by the markit engine.
+
+================================
+Markit
+^^^^^^
+_#Example
+
+[table:]
+[tr:eol][th:] Markit [th:] HTML [th:] Render  
+[tr:][td: width="20%"][pre:]
+[[ul:nol]
+[[li:] item1
+[[li:] item2
+[[li:] item2  
+
+[td: width="20%"][pre:]
+&lt;ul&gt;
+&lt;li&gt; item1
+&lt;/li&gt;&lt;li&gt; item2
+&lt;/li&gt;&lt;li&gt; item3
+&lt;/li&gt;&lt;/ul&gt;
+[td: width="20%"]
+<ul>
+<li> item1
+</li><li> item2
+</li><li> item3
+</li></ul>
+[:table]
+
+_#Explanation
+* the first 2 &lt;li&gt; elements are autoclosed on siblings.
+* the &lt;ul&gt; element is autoclosed because of the blank line.
+* the 3rd &lt;li&gt; element is autoclosed because of parent closing.
+
+=================================
+Markit
+^^^^^^
+_# Autoclose ...
+_# On Sibling : [code:] [[tag:]...[[tag:]
+
+* A tag is autoclosed  just before a tag of same type is open.
+
+
+_{sketchit 0.8
+                     |
+           +--+   ---+-->
+           |x:| def  |
+           +--+      |                      
+  +--+      ^        |    +--+           +--+
+  |x:| abc -+        |    |x:| abc       |:x| def 
+  +--+               |    +--+   |  +--+ +--+   
+   ^                 |     ^     +->|:x|  ^
+  -+                 |    -+        +--+ -+
+}_
+
+* Example: [code:] [[li:] item 1 [[li:] item 2 [[:li] [:] ( 1st item is closed by 2sd )
+
+================================
+Markit
+^^^^^^
+_# Autoclose ...
+_# On Parent : [code:] [[tag1:][[tag2:]...[[:tag1]
+
+* Open tags are autoclosed just before a parent tag is closed.
+
+_{sketchit 0.8
+                         |
+          +--+        ---+-->          +--+
+          |y:| def       |             |:y| def
+          +--+ |         |             +--+ |
+ +--+      ^   |         |    +--+      ^   |   +--+
+ |x:| abc -+   |         |    |x:| abc -+   +-> |:y|
+ +--+          |  +--+   |    +--+              +-++ +--+
+  ^            +->|:x|   |     ^                  +->|:x|
+ -+               +--+   |    -+                     +--+
+}_
+
+* Example: [code:] [[p:] Please welcome [[b:] John [[:p] [:] ( _*b*_ tag is closed by _*p*_ )
+
+================================
+Markit
+^^^^^^
+_# Autoclose 
+_# On End of file : [code:] [[tag:]...eof
+
+* Open tags are autoclosed just before the end of file.
+
+_{sketchit 0.8
+                         |
+          +--+        ---+-->          +---+
+          |y:| def       |             |:y | def
+          +--+           |             +---+   
+ +--+      ^             |    +--+      ^ |   +--+
+ |x:| abc -+             |    |x:| abc -+ +-> |:y|
+ +--+                    |    +--+            +-++ +--+
+  ^            -> (eof)  |     ^                +->|:x| -> (eof)
+ -+                      |    -+                   +--+
+}_
+
+* Example: [code:] [[html:] [[body:] ... [:] ( _*html*_ and _*body*_ will be closed at the end )
+
+================================
+Markit
+^^^^^^
+_# Autoclose 
+_# On End of line [code:] [[tag:eol]...eol
+
+* A tag can schedule to be closed just before end of line.
+
+_{sketchit 0.8
+                       |
+ +-----+            ---+-->  +--+     
+ |x:eol| abc           |     |x:| abc 
+ +-----+               |     +--+ |   +--+
+  ^          -> (eof)  |      ^   +-> |:x| -> (eof)
+ -+                    |     -+       +--+
+}_
+
+* Example: [code:] [[h1:eol] my title [:]
+
+================================
+Markit
+^^^^^^
+_# Autoclose 
+_# On Blank lines [code:] [[tag:]...eof eof
+
+* A tag can schedule to be closed just before an empty line.
+
+_{sketchit 0.8
+                           |
+ +-----+                ---+--> +--+     
+ |x:nol| abc               |    |x:| abc 
+ +-----+                   |    +--+ |   +--+
+  ^         -> (eof)(eol)  |     ^   +-> |:x| -> (eol)(eol)
+ -+                        |    -+       +--+
+}_ 
+* Example: [code:] [[ul:nol] [[li:] item1 [[li:] item2 (eol)(eol) [:] ( _*ul*_ list closed by blank line ) 
+
+================================
+Markit
+^^^^^^
+_# Autoclose
+_# On Target tag [code:] [[tag:tag2]...[[tag2:]
+
+* A tag can schedule to be closed just before a tag of a specific type is open.
+
+_{sketchit 0.8
+                      |
+            +--+   ---+-->             
+            |y:| def  |                 
+            +--+      |                      
+  +---+      ^        |   +--+          +--+
+  |x:y| abc -+        |   |x:| abc      |y:| def 
+  +---+               |   +--+ |   +--+ +^-+   
+   ^                  |    ^   +-> |:x+--+ 
+  -+                  |   -+       +--+   
+}_ 
+
+* Example: [code:] [[head:body] ... [[body:] ... [:] ( _*head*_ is closed by _*body*_ )
+
+================================
+Markit
+^^^^^^
+_# Manual close
+_# Any tag [code:] [[:tag]
+_# Current tag [code:] [[:]
+
+* Last opened tag can be closed.
+
+_{sketchit 0.8
+                |       
+ +--+        ---+---> +--+     
+ |x:| abc       |     |x:| abc 
+ +--+      +-+  |     +--+     +--+
+  ^    |   |:|  |      ^   |   |:x|
+ -+    +-> +-+  |     -+   +-> +--+
+}_
+* Example: [code:] [[div:][[p:]][[b:][[:][[:][[:]
+
+================================
+Markit
+^^^^^^
+_# No autoclose [code:] [[tag:noa]
+
+* Sibling autoclose can be disabled.
+
+_{sketchit 0.8
+                                 | 
+             +--+             ---+-->        +--+                      
+             |x:| def            |           |x:| def                  
+             +--+                |           +--+                      
+ +-----+      ^   |   +--+       |  +--+      ^   |   +--+         
+ |x:noa| abc -+   +-> |:x|       |  |x:| abc -+   +-> |:x|         
+ +-----+              +--+  +--+ |  +--+              +--+  +--+
+  ^                     |   |:x| |   ^                  |   |:x|
+ -+                     +-> +--+ |  -+                  +-> +--+
+}_
+
+* Example: [code:] [[div:noa id="indented"][[div:] abc [[div:] def [[:][[:]
+
+
+
