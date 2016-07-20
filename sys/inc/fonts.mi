@@ -1,0 +1,4 @@
+_{embed.font titles %(sys)s/fonts/artifika-regular-webfont.woff }_
+[style: scoped]
+html h1,h2,h3,h4,h5,header  { font-family:titles,sans-serif;  }
+[:style]

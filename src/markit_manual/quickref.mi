@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+[html:]
+[head:body]
+<meta charset="UTF-8"/>
+[title:eol] Wikit
+[style: type="text/css"] 
+    body {   
+        background: black;
+        font-size: 1.0em;
+        font-family: Arial;
+        }
+    .contents { 
+        background: rgb(223, 231, 229); 
+        width:700px;
+        margin-left:auto;
+        margin-right:auto;
+        padding:50px;
+        }
+    pre { 
+        background: rgba(256,256,200,0.5);
+        width: 95%;
+        margin-left: 30px;
+        font-size: 0.9em;
+        }
+    svg {   
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+        font-size:0.7em;
+        } 
+    path,line {   
+        stroke: rgba(0,0,0,1); 
+        stroke-width: 2; 
+        stroke-linejoin:round;
+        stroke-linecap:round;
+        vector-effect: non-scaling-stroke;
+        } 
+    path {
+        fill: rgba(255,0,255,0.5);
+    }
+    text {
+        font-weight: bold;
+        }
+    rect {
+        fill: rgba(255, 255, 143, 0.8);
+        stroke-width:1;
+        vector-effect: non-scaling-stroke;
+        }
+    circle {
+        fill: black;
+        stroke-width: 0;
+        }
+    .dialog path, ellipse {
+        fill: rgba(180,180,200,1);
+        stroke-width: 0;
+        }
+    #arrow  { fill: black; }
+    #bubble { fill: black; }
+    .listlvl2     { margin-left:5%;  }
+    .listlvl3     { margin-left:15%; }
+    .listlvl4     { margin-left:25%; }
+[:]
+[body:]
+[div: class="contents"]
+_# Quick Ref
+_## [wiki:off]_## Heading2[wiki:on]
+_### [wiki:off]_### Heading3[wiki:on]
+_#### [wiki:off]_#### Heading4[wiki:on]
+_##### [wiki:off]_##### Heading5[wiki:on]
+_###### [wiki:off]_###### Heading6[wiki:on]
+
+_### Code:
+[wiki:off]
+[pre:]
+* list item 1 
+* list item 2 
+** Sublist 2 - item 1
+** Sublist 2 - item 2
+*** Sublist 2,2 - item 1
+** Sublist 2 - item 3
+* list item 3 
+[:pre]
+[wiki:on]
+
+_### Render:
+* list item 1 
+* list item 2 
+** Sublist 2 - item 1
+** Sublist 2 - item 2
+*** Sublist 2,2 - item 1
+** Sublist 2 - item 3
+* list item 3 
+
+_### Code:
+[wiki:off]
+[pre:eol] This is _*bold*_, this is _/italic/_, this is _=monospace=_.
+[wiki:on]
+_### Render:
+This is _*bold*_, this is _/italic/_, this is _=monospace=_. 
+
+_### Code:
+[wiki:off]
+[pre:]
+|||Table |||Col1 |||Col2 |||
+|||Row1  || ABC  || DEF  ||
+|||Row2  || 123  || 456  ||
+[:pre]
+[wiki:on]
+_### Render:
+|||   Table   ||| Col1 ||| Col2 |||
+||    Row1    ||  ABC   ||  DEF  ||
+||    Row2    ||  123   ||  456  ||
+
+_### Code:
+[pre:]
+_!{sketchit  2.0
+[wiki:off]
+ +-------+  +-------+
+ | Start +--> Stop  |
+ +-------+  +-------+
+[wiki:on]
+}_
+[:pre]
+_### Render:
+_{sketchit  2.0
+ +-------+  +-------+
+ | Start +--> Stop  |
+ +-------+  +-------+
+}_
+

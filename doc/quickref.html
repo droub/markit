@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title> Wikit</title>
+<style type="text/css"> 
+    body {   
+        background: black;
+        font-size: 1.0em;
+        font-family: Arial;
+        }
+    .contents { 
+        background: rgb(223, 231, 229); 
+        width:700px;
+        margin-left:auto;
+        margin-right:auto;
+        padding:50px;
+        }
+    pre { 
+        background: rgba(256,256,200,0.5);
+        width: 95%;
+        margin-left: 30px;
+        font-size: 0.9em;
+        }
+    svg {   
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+        font-size:0.7em;
+        } 
+    path,line {   
+        stroke: rgba(0,0,0,1); 
+        stroke-width: 2; 
+        stroke-linejoin:round;
+        stroke-linecap:round;
+        vector-effect: non-scaling-stroke;
+        } 
+    path {
+        fill: rgba(255,0,255,0.5);
+    }
+    text {
+        font-weight: bold;
+        }
+    rect {
+        fill: rgba(255, 255, 143, 0.8);
+        stroke-width:1;
+        vector-effect: non-scaling-stroke;
+        }
+    circle {
+        fill: black;
+        stroke-width: 0;
+        }
+    .dialog path, ellipse {
+        fill: rgba(180,180,200,1);
+        stroke-width: 0;
+        }
+    #arrow  { fill: black; }
+    #bubble { fill: black; }
+    .listlvl2     { margin-left:5%;  }
+    .listlvl3     { margin-left:15%; }
+    .listlvl4     { margin-left:25%; }
+</style>
+</head><body>
+<div class="contents">
+<h1> Quick Ref</h1>
+<h2> _## Heading2</h2>
+<h3> _### Heading3</h3>
+<h4> _#### Heading4</h4>
+<h5> _##### Heading5</h5>
+<h6> _###### Heading6<div class="spacer"></div><h3> Code:</h3></h6>
+
+<pre>
+* list item 1 
+* list item 2 
+** Sublist 2 - item 1
+** Sublist 2 - item 2
+*** Sublist 2,2 - item 1
+** Sublist 2 - item 3
+* list item 3 
+</pre>
+<div class="spacer"></div><h3> Render:</h3>
+<ul><li> list item 1 
+</li><li> list item 2 
+</li><li class="listlvl2"> Sublist 2 - item 1
+</li><li class="listlvl2"> Sublist 2 - item 2
+</li><li class="listlvl3"> Sublist 2,2 - item 1
+</li><li class="listlvl2"> Sublist 2 - item 3
+</li><li> list item 3 </li></ul>
+
+<h3> Code:</h3>
+
+<pre> This is _*bold*_, this is _/italic/_, this is _=monospace=_.</pre>
+
+<h3> Render:</h3>
+This is <b>bold</b>, this is <em>italic</em>, this is <code>monospace</code>. 
+
+<h3> Code:</h3>
+
+<pre>
+|||Table |||Col1 |||Col2 |||
+|||Row1  || ABC  || DEF  ||
+|||Row2  || 123  || 456  ||
+</pre>
+
+<h3> Render:</h3>
+<table>
+<tr><th>   Table   </th><th> Col1 </th><th> Col2 </th></tr>
+<tr><td>    Row1    </td><td>  ABC   </td><td>  DEF  </td></tr>
+<tr><td>    Row2    </td><td>  123   </td><td>  456  </td></tr></table>
+
+<h3> Code:</h3>
+<pre>
+_{sketchit  2.0
+
+ +-------+  +-------+
+ | Start +--&gt; Stop  |
+ +-------+  +-------+
+
+}_
+</pre>
+<h3> Render:</h3>
+<svg width="42.0em" height="8.0em" viewbox="0 0 21 4">
+<defs>
+<path id="arrow" d="M -0.3,0 l 0,0.3,0.6,-0.3,-0.6,-0.3 z"/>
+<circle id="bubble" cx="0" cy="0" r="0.3" />
+</defs>
+<g font-size="1">
+<rect x="12" y="0" width="8" height="2"/>
+<rect x="1" y="0" width="8" height="2"/>
+<line x1="9" y1="1" x2="12" y2="1"/>
+<text x="2" y="1" dy=".3em">Start</text>
+<text x="13" y="1" dy=".3em">Stop</text>
+<use x="12" y="1" xlink:href="#arrow" transform="rotate(0.00,12,1)"/>
+</g>
+</svg>
+
+</div></body></html>
