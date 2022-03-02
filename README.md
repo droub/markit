@@ -2,5 +2,5 @@ markit
 ======
 
 * Wiki-syntax based document generator
-* Reference doc is [here] (http://derivationbud.github.io/markit/doc/markit_manual.html)
+* Reference doc is [here] (http://droub.github.io/markit/doc/markit_manual.html)
 
